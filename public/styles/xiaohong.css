@@ -1,0 +1,85 @@
+ *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Helvetica Neue,PingFang SC,Microsoft YaHei;
+    -webkit-font-smoothing:antialiased;/* chorm safari 抗锯齿*/
+    -webkit-overflow-scrolling:touch;
+    outline:none;
+}
+/* 滚动条样式调节*/
+::-webkit-scrollbar{margin-right:3px;width:4px;height:4px}
+::-webkit-scrollbar,::-webkit-scrollbar-track{background-color:transparent}
+::-webkit-scrollbar-thumb{width:4px;border-radius:2px;background-color:#e4e4e4}
+
+body,html{min-height:100%;background:#2e323c;}
+a,a:visited{text-decoration:none}
+h1,h2,h3,h4,h5,h6{font-weight:500}
+
+/*.top{
+	width:100vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}*/
+
+.header{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top:50px;
+}
+
+.header img{
+	max-width: 70%;
+}
+
+.content{
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.content-list-a{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width:70%;
+	height: 42px;
+	background-color: #cc2b2c;
+	margin-top:30px;
+	border-radius: 10px;
+	font-size: 14px;
+	color:#fff;
+	transition: background-color .2s;
+	cursor: pointer;
+}
+
+.content-list-a:hover{
+	background-color: #8d1b13;
+	color:#eee;
+}
+
+.footer{
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.footer-a{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top:30px;
+	max-width: 70%;
+	background-color: #fff;
+	padding:10px;
+}
+
+.footer-a-img{
+	width:100%;
+}
