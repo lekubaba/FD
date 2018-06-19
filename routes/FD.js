@@ -9,10 +9,12 @@ let {formatDate} = require('../utils/DateUtil');
 
 
 router.get('/',function(req,res){
-	res.render('fd.pug')
+	res.render('fd')
 })
 
-
+router.get('/baoming',function(req,res){
+	res.render('yuyue')
+})
 
 
 module.exports = router;
