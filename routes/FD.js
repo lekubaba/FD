@@ -1,3 +1,4 @@
+let {User} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -9,8 +10,29 @@ let {formatDate} = require('../utils/DateUtil');
 
 
 router.get('/',function(req,res){
+	res.render('number')
+})
+
+router.get('/choose',function(req,res){
 	res.render('fd')
 })
+
+
+router.post('/save_number',function(req,res){
+	var user = new User({
+		number:req.body.number
+	})
+
+	user.save(function(err){
+		if(err){
+			return logger.error(err)
+		}
+		var ret = {code:200};
+		return res.json(ret);
+	})
+})
+
+
 
 router.get('/baoming',function(req,res){
 	res.render('yuyue')

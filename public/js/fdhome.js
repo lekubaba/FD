@@ -26,14 +26,43 @@
             window.frames[0].window.alert(name);  
             iframe.parentNode.removeChild(iframe);  
         }  
-    }  
-
-
-    
-
-
-
-
-    
+    }     
       
 })()
+
+
+$(document).ready(function(){
+
+    $('.content-list-aa').click(function(e){
+        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(14[5-7]{1})|(17[6-8]{1}))+\d{8})$/;
+        var number = $('#content-list-bb').val();
+        var data = {number:number}; 
+        if(myreg.test(number)){
+            $.post('/save_number',data,function(dataa,status){
+                window.location.href='/choose'
+            });
+
+        }else{
+            if(number.length===0){
+                 $("#content-list-bb").val("请输入手机号"); 
+                 e.preventDefault();
+                 return;                
+            }
+
+            if(!myreg.test(number)){ 
+                 $("#content-list-bb").val("手机号格式错误"); 
+                 e.preventDefault();
+                 return;
+            }
+
+        }
+
+        e.preventDefault();
+
+    })
+
+
+
+
+
+})
