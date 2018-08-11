@@ -20,7 +20,8 @@ router.get('/choose',function(req,res){
 
 router.post('/save_number',function(req,res){
 	var user = new User({
-		number:req.body.number
+		number:req.body.number,
+		time:formatDate('yyyy-MM-dd hh:mm:ss')
 	})
 
 	user.save(function(err){
@@ -37,6 +38,8 @@ router.post('/save_number',function(req,res){
 router.get('/baoming',function(req,res){
 	res.render('yuyue')
 })
+
+
 
 
 module.exports = router;

@@ -55,6 +55,19 @@ var bodyParser = require('body-parser');
 // }));
 
 
+// --------------------------------------------------
+
+// 颍颍的路由
+
+app.get('/bigka',function(req,res){
+	res.sendFile(__dirname+'/public/files_bigka/Baobab.html')
+})
+
+
+// ----------------------------------------
+
+
+
 app.use(cookieParser('im a secret for cookies'));
 
 /*自动加载路由，引入自动加载路由模块*/

@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 //用户数据模型
 
 var userSchema = new Schema({
-	number:Number
+	number:Number,
+	time:String
 });
 
 
