@@ -55,13 +55,6 @@ var bodyParser = require('body-parser');
 // }));
 
 
-// --------------------------------------------------
-
-// 颍颍的路由
-
-app.get('/bigka',function(req,res){
-	res.sendFile(__dirname+'/public/files_bigka/Baobab.html')
-})
 
 
 // ----------------------------------------

@@ -106,14 +106,21 @@ h1,h2,h3,h4,h5,h6{font-weight:500}
 	margin:0 0 20px 0;
 }
 
-.content input{
+.content-content{
 	width:70%;
-	height: 42px;
+	height: :auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.content-content input{
+	width:100%;
+	height: 45px;
 	border:none;
 	padding-left:10px;
 	margin:0;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-bottom: 1px solid #eee;
 }
 
 
