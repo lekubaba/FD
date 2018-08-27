@@ -15,10 +15,20 @@ var codeSchema = new Schema({
 	time:String
 });
 
+var pingSchema = new Schema({
+	number:Number,
+	zonghefen:Number,
+	jikexishu:Number,
+	chushiedu:Number,
+	time:String
+});
+
 
 var User = mongoose.model('user',userSchema);
 var Code = mongoose.model('code',codeSchema);
+var Ping = mongoose.model('ping',pingSchema);
 
 
 module.exports.User = User;
 module.exports.Code = Code;
+module.exports.Ping = Ping;

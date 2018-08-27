@@ -1,4 +1,4 @@
-let {User,Code} = require('../mongoose/modelSchema')
+let {User,Code,Ping} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -29,10 +29,14 @@ router.post('/save_number',function(req,res){
 		time:formatDate('yyyy-MM-dd hh:mm:ss')
 	})
 
+	//首先验证授权码是否合法
+
 	Code.find({authCode:req.body.authCode},function(err,results){
 		if(err){
 			return logger.error(err)
 		}else{
+
+			//如果合法，则保存添加的使用
 
 			if(results.length>0){
 
@@ -40,11 +44,34 @@ router.post('/save_number',function(req,res){
 					if(err){
 						return logger.error(err)
 					}
-					var ret = {code:200};
-					return res.json(ret);
+
+					//合法的基础上，查看手机号是否已经评估过
+
+					Ping.find({number:req.body.number},function(err,result2){
+						if(err){
+							return logger.error(err);
+						}else{
+							//如果没评估过，则返回200状态码
+							if(result2.length===0){
+
+								var ret = {code:200};
+								return res.json(ret);
+							//否则返回700状态码
+							}else{
+								var ret = {code:700};
+								return res.json(ret);
+
+							}
+						}
+
+
+					})
+
+
+
 				})
 
-
+			//不合法，则返回300状态码，前段提示授权码不合法
 			}else{
 				return res.json({code:300});
 			}			
@@ -91,6 +118,68 @@ router.post('/add_authCode',function(req,res){
 
 
 })
+
+//到看额度详情页面
+
+router.get('/open_profile/:number',function(req,res){
+	var number = req.params.number;
+	Ping.findOne({number:number},function(err,results){
+		if(err){
+			return logger.error(err)
+		}else{
+
+			res.render('remind',{ret:results});
+		}
+	})
+})
+
+
+//评估额度界面
+
+router.get('/open_pinggu',function(req,res){
+	res.render('pingguedu');
+})
+
+
+//添加评估
+router.post('/add_pinggu',function(req,res){
+
+	var ping = new Ping({
+		number:req.body.number,
+		zonghefen:req.body.zonghefen,
+		jikexishu:req.body.jikexishu,
+		chushiedu:req.body.chushiedu,
+		time:formatDate('yyyy-MM-dd hh:mm:ss')
+	})
+
+	Ping.find({number:req.body.number},function(err,results){
+		if(err){
+			return logger.error(err)
+		}else{
+			if(results.length===0){
+				ping.save(function(err){
+					return res.json({code:200});
+				})
+			}else{
+				Ping.update({number:req.body.number},{$set:{"zonghefen":req.body.zonghefen,"jikexishu":req.body.jikexishu,"chushiedu":req.body.chushiedu}},function(err){
+					if(err){
+						return logger.error(err)
+					}else{
+						return res.json({code:600})
+					}
+				})
+			}
+		}
+	})
+
+
+})
+
+
+
+
+
+
 
 
 

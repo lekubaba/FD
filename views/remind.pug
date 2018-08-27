@@ -12,18 +12,25 @@ html(lang="en")
 		meta(name="apple-mobile-web-app-title" content="飞贷福利")
 		meta(name="mobile-web-app-capable" content="yes")
 		meta(name="apple-mobile-web-app-status-bar-style" content="white")
-		link(rel="stylesheet" href="/styles/xiaohong.css")
+		link(rel="stylesheet" href="/styles/xiaohonga.css")
 	body
-		div.header-number
-			img(src="/images/syq1.png")
-			img(src="/images/three30.png")
-		div.content
-			div.content-content
-				input#content-list-bb(type='text' placeholder="请输入注册手机号")
-				input#content-list-aa(type='text' placeholder="请输入授权号码")
-			a.content-list-aa(href='/choose') 下一步
-		div.footer
-			div.footer-a
-				img.footer-a-img(src="/images/syq5.png")
+		div.remind-top
+			div.remind-img
+				img(src="/images/green.png")
+			div.remind-title
+				text 恭喜获得初始额度
+			div.remind-profile
+				div.remind-profile-t -- 客户详情 --
+				div.remind-profile-a
+					div.remind-aa 综合评分
+					div.remind-aa 饥渴系数
+					div.remind-aa 初始额度
+				div.remind-profile-a
+					div.remind-aa=ret.zonghefen
+					div.remind-aa=ret.jikexishu
+					div.remind-aa=ret.chushiedu
+			a.remind-footer(href='/choose') 选择提现入口
+
+
 		script(src="/js/jquery.min.js")
-		script(src="/js/fdhome.js")
+		script(src="/js/addcode.js")
