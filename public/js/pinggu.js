@@ -36,13 +36,15 @@ $(document).ready(function(){
     $('.content-list-aa').click(function(e){
         var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(19[0-9]{1})|(18[0-9]{1})|(14[0-7]{1})|(17[0-8]{1}))+\d{8})$/;
         var newreg = /^[0-9]+([.]{1}[0-9]+){0,1}$/;
+        var creg = /^[\u2E80-\u9FFF]+$/;
+        var username= $('#content-list-abc').val();
         var number = $('#content-list-aa').val();
         var zonghefen = $('#content-list-bb').val();
         var jikexishu = $('#content-list-cc').val();
         var chushiedu = $('#content-list-dd').val();
-        var data = {number:number,zonghefen:zonghefen,jikexishu:jikexishu,chushiedu:chushiedu}; 
+        var data = {username:username,number:number,zonghefen:zonghefen,jikexishu:jikexishu,chushiedu:chushiedu}; 
 
-        if(myreg.test(number)&&newreg.test(zonghefen)&&newreg.test(jikexishu)&&newreg.test(chushiedu)){
+        if(creg.test(username)&&myreg.test(number)&&newreg.test(zonghefen)&&newreg.test(jikexishu)&&newreg.test(chushiedu)){
             $.post('/add_pinggu',data,function(dataa,status){
                 if(dataa.code===200){
                     $("#content-list-aa").val("评估添加成功"); 
@@ -53,6 +55,16 @@ $(document).ready(function(){
             });
 
         }else{
+           if(username.length===0){
+                 $("#content-list-abc").val("请输入用户姓名"); 
+                 e.preventDefault();
+                 return;                
+            }
+            if(!creg.test(username)){ 
+                 $("#content-list-abc").val("只能输入中文"); 
+                 e.preventDefault();
+                 return;
+            }
 
            if(number.length===0){
                  $("#content-list-aa").val("请输入注册号码"); 

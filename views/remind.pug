@@ -18,9 +18,10 @@ html(lang="en")
 			div.remind-img
 				img(src="/images/green.png")
 			div.remind-title
+				text(style="font-size:35px;margin-bottom:10px;")=ret.username
 				text 恭喜获得初始额度
 			div.remind-profile
-				div.remind-profile-t -- 客户详情 --
+				div.remind-profile-t -- 审核结果 --
 				div.remind-profile-a
 					div.remind-aa 综合评分
 					div.remind-aa 饥渴系数
@@ -29,6 +30,7 @@ html(lang="en")
 					div.remind-aa=ret.zonghefen
 					div.remind-aa=ret.jikexishu
 					div.remind-aa=ret.chushiedu
+			div.remind-time=ret.time
 			a.remind-footer(href='/choose') 选择提现入口
 
 

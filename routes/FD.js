@@ -36,40 +36,75 @@ router.post('/save_number',function(req,res){
 			return logger.error(err)
 		}else{
 
-			//如果合法，则保存添加的使用
+			//如果合法，则保存添加的号码
 
 			if(results.length>0){
 
-				user.save(function(err){
+				//查看添加的号码是否存在
+
+				User.find({number:req.body.number},function(err,result1){
 					if(err){
-						return logger.error(err)
-					}
+						return logger.error(err);
+					}else{
+						//如果存在就不保存，
+						if(result1.length>0){
+							//合法的基础上，查看手机号是否已经评估过
+							Ping.find({number:req.body.number},function(err,result2){
+								if(err){
+									return logger.error(err);
+								}else{
+									//如果没评估过，则返回200状态码
+									if(result2.length===0){
 
-					//合法的基础上，查看手机号是否已经评估过
+										var ret = {code:200};
+										return res.json(ret);
+									//否则返回700状态码
+									}else{
+										var ret = {code:700};
+										return res.json(ret);
 
-					Ping.find({number:req.body.number},function(err,result2){
-						if(err){
-							return logger.error(err);
+									}
+								}
+							})
+						//不存在就保存
 						}else{
-							//如果没评估过，则返回200状态码
-							if(result2.length===0){
 
-								var ret = {code:200};
-								return res.json(ret);
-							//否则返回700状态码
-							}else{
-								var ret = {code:700};
-								return res.json(ret);
+							user.save(function(err){
+								if(err){
+									return logger.error(err)
+								}
 
-							}
+								//合法的基础上，查看手机号是否已经评估过
+
+								Ping.find({number:req.body.number},function(err,result2){
+									if(err){
+										return logger.error(err);
+									}else{
+										//如果没评估过，则返回200状态码
+										if(result2.length===0){
+
+											var ret = {code:200};
+											return res.json(ret);
+										//否则返回700状态码
+										}else{
+											var ret = {code:700};
+											return res.json(ret);
+
+										}
+									}
+
+
+								})
+							})
+
+
+
 						}
-
-
-					})
-
+					}
 
 
 				})
+
 
 			//不合法，则返回300状态码，前段提示授权码不合法
 			}else{
@@ -145,6 +180,7 @@ router.get('/open_pinggu',function(req,res){
 router.post('/add_pinggu',function(req,res){
 
 	var ping = new Ping({
+		username:req.body.username,
 		number:req.body.number,
 		zonghefen:req.body.zonghefen,
 		jikexishu:req.body.jikexishu,
@@ -161,7 +197,7 @@ router.post('/add_pinggu',function(req,res){
 					return res.json({code:200});
 				})
 			}else{
-				Ping.update({number:req.body.number},{$set:{"zonghefen":req.body.zonghefen,"jikexishu":req.body.jikexishu,"chushiedu":req.body.chushiedu}},function(err){
+				Ping.update({number:req.body.number},{$set:{"username":req.body.username,"zonghefen":req.body.zonghefen,"jikexishu":req.body.jikexishu,"chushiedu":req.body.chushiedu}},function(err){
 					if(err){
 						return logger.error(err)
 					}else{

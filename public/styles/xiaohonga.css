@@ -32,16 +32,19 @@ h1,h2,h3,h4,h5,h6{font-weight:500}
 	justify-content: center;
 }
 
+
+
 .remind-img img{
-	margin-top:50px;
+	margin-top:30px;
 	width:100%;
 	height: auto;
 }
 
 .remind-title{
 	width:100%;
-	height: 80px;
+	height: 120px;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
@@ -49,7 +52,9 @@ h1,h2,h3,h4,h5,h6{font-weight:500}
 .remind-title text{
 	font-size: 25px;
 	font-weight: bold;
+	margin-bottom: 20px;
 }
+
 
 .remind-profile{
 	width:90%;
@@ -105,4 +110,11 @@ h1,h2,h3,h4,h5,h6{font-weight:500}
 
 .remind-footer:hover{
 	background-color: #b71c1e;
+}
+
+
+.remind-time{
+	margin-top:30px;
+	font-size: 12px;
+	color:#999;
 }

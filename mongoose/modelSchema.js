@@ -16,6 +16,7 @@ var codeSchema = new Schema({
 });
 
 var pingSchema = new Schema({
+	username:String,
 	number:Number,
 	zonghefen:Number,
 	jikexishu:Number,
