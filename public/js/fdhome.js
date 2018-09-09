@@ -35,10 +35,12 @@ $(document).ready(function(){
 
     $('.content-list-aa').click(function(e){
         var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(19[0-9]{1})|(18[0-9]{1})|(14[0-7]{1})|(17[0-8]{1}))+\d{8})$/;
+        var dreg = /^\d{8}$/;
         var number = $('#content-list-bb').val();
         var authCode = $('#content-list-aa').val();
         var data = {number:number,authCode:authCode}; 
-        if(myreg.test(number)&&myreg.test(authCode)){
+        var ft = myreg.test(authCode) || dreg.test(authCode);
+        if(myreg.test(number)&&ft){
             $.post('/save_number',data,function(dataa,status){
                 if(dataa.code===300){
                      $("#content-list-aa").val("授权码不存在或有误,请重新输入"); 
@@ -72,7 +74,7 @@ $(document).ready(function(){
                  e.preventDefault();
                  return;                
             }
-            if(!myreg.test(authCode)){ 
+            if(!ft){ 
                  $("#content-list-aa").val("授权码格式错误"); 
                  e.preventDefault();
                  return;

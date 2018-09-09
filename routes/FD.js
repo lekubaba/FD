@@ -1,4 +1,4 @@
-let {User,Code,Ping} = require('../mongoose/modelSchema')
+let {User,Code,Ping,Hao,Pg} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');

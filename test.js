@@ -1,7 +1,66 @@
-var str = '体项目的特别方案</p><p>&nbsp;</p><p><htmlxmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns="http://www.w3.org/TR/REC-html40"><!--[if gte mso 9]><xml></xml><![endif]--><style>@font-face{font-family:"Times New Roman";}@font-face{font-family:"宋体";}@font-face{font-family:"Calibri";}@font-face{font-family:"新宋体";}p.MsoNormal{mso-style-name:正文;mso-style-parent:"";margin-top:0.0000pt;margin-right:0.0000pt;margin-bottom:0.0000pt;margin-left:0.0000pt;text-autospace:none;mso-pagination:none;text-align:left;font-family:新宋体;font-size:11.0000pt;}span.msoIns{mso-style-type:export-only;mso-style-name:"";text-decoration:underline;text-underline:single;color:blue;}span.msoDel{mso-style-type:export-only;mso-style-name:"";text-decoration:line-through;color:red;}@page{mso-page-border-surround-header:no;	mso-page-border-surround-footer:no;}@page Section0{margin-top:0.0000pt;margin-bottom:0.0000pt;margin-left:84.0000pt;margin-right:84.0000pt;size:595.5000pt 528.0000pt;mso-page-orientation:landscape;}div.Section0{page:Section0;}</style></htmlxmlns:o="urn:schemas-microsoft-com:office:office"></p><p><font face="新宋体">高效性</font>:<font face="新宋体">福州小红线信息咨询服务有限公司</font><font face="新宋体">具有工作高效性</font>,受理客户咨询后,始终把客户的服务<font face="新宋体">置于</font><font face="新宋体">公司的高效流程之中。</font></p>'
+var all_money = 500000;
+var first_money = 2500;
+var first_month = 27;
+var sec_money = 0;
+var sec_month = 0;
+var third_money = 0;
+var third_month = 0;
+var ka_num = 5;
+var ka_zong = 100000;
+var ka_shengyu = 90000;
+var ka_six = 8000;
+var ka_first = 70;
+var ka_years = 30000;
+var ka_last = 15000;
+var ka_laste = 15000;
+var loan_num = 5;
+var loan_all=100000;
+var loan_six = 2;
+var loan_three = 1;
+var loan_one = 0;
+var other_yc = "否";
+var other_dq = "否";
+var other_dc = "否";
+var other_db = "否";
+var other_zx = "否";
+var other_gz = "否";
+var other_gjj = "否";
+var other_gjje = 0;
+var other_six = 3;
+var other_three = 2;
+var other_one = 1;
+var other_yfs = 1;
+var other_yqs = 0;
+var other_yqall = 0;
 
 
-str=str.replace(/<\/?html[^>]*>/gi, "")
-str=str.replace(/<\/?style>[^>]*>/gi, "")
+//将金额转化成万为单位的值
+var Maths =function(value){
+	//将数值转换成字符串
+	var str = String(value);
+	//数值长度
+	var len = str.length;
+	if(len===4){
+		return Number('0.8');
+	}
+	if(len===5){
+		return Number(str.slice(0,1)+'.'+str.slice(1,2));
+	}
+	if(len===6){
+		return Number(str.slice(0,2)+'.'+str.slice(2,3));
+	}
+}
 
-console.log(str)
+
+var zonghefen =79;
+var jikexishu =3.7;
+var chushiedu = 120000;
+
+if(jikexishu===3.7){
+	chushiedu = Maths(Math.round(chushiedu*1.2));
+}else if(jikexishu===3.8){
+	chushiedu =chushiedu;
+}else if(jikexishu===3.9){
+	chushiedu =chushiedu*0.75;
+}
+console.log(chushiedu)
