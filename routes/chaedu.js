@@ -51,8 +51,6 @@ router.post('/gonghao',function(req,res){
 	})
 
 })
-
-
 //验证工号，进入到录件系统首页
 
 router.post('/check_gonghao',function(req,res){
@@ -98,6 +96,7 @@ router.get('/sys_home',function(req,res){
 //接受所有录入的数据并且处理数据得出结果
 
 router.post('/chaedu_dashuju',function(req,res){
+	console.log(req.body)
 	var gonghao = req.signedCookies.mycookies.gonghao;
     var username = req.body.username;
     var card_id = req.body.card_id;

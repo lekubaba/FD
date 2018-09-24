@@ -126,7 +126,7 @@ var loan_bi_fen = function(all_money,loan_all){
 	if(all_money===0){
 		return 0;
 	}
-	if(all_money>10&&loan_all===0){
+	if(all_money>0&&loan_all===0){
 		return 4;
 	}
 	var loan_xs = loan_all/all_money;
@@ -136,7 +136,7 @@ var loan_bi_fen = function(all_money,loan_all){
 	if(loan_xs>=0.3&&loan_xs<=0.5){
 		return 1;
 	}
-	if(loan_xs>0.5&&loan_xs<0.1){
+	if(loan_xs>0.5&&loan_xs<1){
 		return 0;
 	}
 	if(loan_xs>=1){
@@ -151,6 +151,13 @@ var loan_bi_fen = function(all_money,loan_all){
 
 var loan_shu_fen = function(first_money,sec_money,third_money,loan_num,ka_num){
 
+	if(loan_num>=6&&loan_num<8){
+		return -1
+	}
+
+	if(loan_num>=8){
+		return -2
+	}
 	return 0;
 }
 
@@ -321,11 +328,49 @@ var other_yfs_fen = function(first_money,sec_money,third_money,other_yfs,loan_nu
 
 /*10----24个月所有逾期月数比分*/
 
-var other_yqall_fen = function(first_money,sec_money,third_money,other_yqall,loan_num,ka_num){
+var other_yqall_fen = function(other_yqall){
 
-	return 0;
-	//按揭房数量
-	// var fang_num = ((first_money>0?1:0) + (sec_money>0?1:0) + (third_money>0?1:0));
+	if(other_yqall===0){
+
+		return 2;
+	}
+	if(other_yqall===1){
+
+		return 0;
+	}
+	if(other_yqall===2){
+
+		return 0;
+	}
+	if(other_yqall===3){
+
+		return -1;
+	}
+	if(other_yqall===4){
+
+		return -1;
+	}
+	if(other_yqall===5){
+
+		return -2;
+	}
+	if(other_yqall===6){
+
+		return -2;
+	}
+	if(other_yqall===7){
+
+		return -3;
+	}
+	if(other_yqall===8){
+
+		return -4;
+	}
+	if(other_yqall>8){
+
+		return -5;
+	}
+
 
 }
 
@@ -360,11 +405,19 @@ other_yqall:24个月内逾期次数总和-----
 
 var zonghefen_fang =function(all_money,first_money,first_month,sec_money,sec_month,third_money,third_month,ka_num,ka_zong,ka_shengyu,ka_six,ka_first,ka_years,ka_last,ka_laste,loan_num,loan_all,loan_six,loan_three,loan_one,other_yc,other_dq,other_dc,other_zx,other_gjj,other_gjje,other_six,other_three,other_one,other_yfs,other_yqs,other_yqall){
 
-	var zong_fen = 72+first_month_fen(first_month)+ka_first_fen(first_money,sec_money,third_money,ka_first,loan_num,ka_num)+ka_pingjun_fen(ka_six,ka_zong)+ka_shengyu_fen(ka_zong,ka_shengyu)+loan_bi_fen(all_money,loan_all)+loan_shu_fen(first_money,sec_money,third_money,loan_num,ka_num)+other_one_fen(other_one)+other_three_fen(other_three)+other_six_fen(other_six)+other_yqs_fen(first_money,sec_money,third_money,other_yqs,loan_num,ka_num)+other_yfs_fen(first_money,sec_money,third_money,other_yfs,loan_num,ka_num)+other_yqall_fen(first_money,sec_money,third_money,other_yqall,loan_num,ka_num)+yes_no_fen(other_yc,other_dq,other_dc,other_zx,other_gjj)
-	if(zong_fen>=70&&zong_fen<75){
+	var zong_fen = 72+first_month_fen(first_month)+ka_first_fen(first_money,sec_money,third_money,ka_first,loan_num,ka_num)+ka_pingjun_fen(ka_six,ka_zong)+ka_shengyu_fen(ka_zong,ka_shengyu)+loan_bi_fen(all_money,loan_all)+loan_shu_fen(first_money,sec_money,third_money,loan_num,ka_num)+other_one_fen(other_one)+other_three_fen(other_three)+other_six_fen(other_six)+other_yqs_fen(first_money,sec_money,third_money,other_yqs,loan_num,ka_num)+other_yfs_fen(first_money,sec_money,third_money,other_yfs,loan_num,ka_num)+other_yqall_fen(other_yqall)+yes_no_fen(other_yc,other_dq,other_dc,other_zx,other_gjj)
+	
+	if(zong_fen>=69&&zong_fen<72){
+		return 75;
+	}	
+	if(zong_fen>=72&&zong_fen<74){
+		return 76;
+	}	
+
+	if(zong_fen>=74&&zong_fen<76){
 		return 77;
 	}
-	if(zong_fen>=75&&zong_fen<=78){
+	if(zong_fen>=76&&zong_fen<=78){
 		return 78;
 	}
 	if(zong_fen>78&&zong_fen<=82){
@@ -385,6 +438,8 @@ var zonghefen_fang =function(all_money,first_money,first_month,sec_money,sec_mon
 	if(zong_fen>93){
 		return 85;
 	}
+
+	return zonghefen;
 
 }
 

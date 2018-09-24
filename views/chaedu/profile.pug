@@ -25,6 +25,9 @@ html(lang="en")
 				div.chaedu_aa 手机号
 				div.chaedu_aa 饥渴系数
 				div.chaedu_aa 客户进度
+			div.chaedu_profile_a
+				div.chaedu_aab 合伙人
+				div.chaedu_aab 预计奖金
 		div.chaedu_content
 			each item in rets
 				div.chaedu_profile(style="margin-top:5px;")
@@ -38,3 +41,4 @@ html(lang="en")
 						div.chaedu_aaa=item.number
 						div.chaedu_aaa=item.jikexishu
 						div.chaedu_aaa(style="color:red;")=item.jindu_
+	script(src="/js/remind.js")

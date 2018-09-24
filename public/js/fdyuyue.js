@@ -27,16 +27,6 @@
             iframe.parentNode.removeChild(iframe);  
         }  
     }  
-
-    // $('.content-list-a').last().click(function(e){
-
-    //     var number = $('.content-list-a').first().val()
-    // })
-    
-
-
-
-
     
       
 })()

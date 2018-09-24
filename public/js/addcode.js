@@ -34,7 +34,7 @@
 $(document).ready(function(){
 
     $('.content-list-aa').click(function(e){
-        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(19[0-9]{1})|(18[0-9]{1})|(14[0-7]{1})|(17[0-8]{1}))+\d{8})$/;
+        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(19[0-9]{1})|(18[0-9]{1})|(14[0-9]{1})|(17[0-8]{1}))+\d{8})$/;
         var dreg = /^\d{8}$/;
         var authCode = $('#content-list-aa').val();
         var data = {authCode:authCode}; 
