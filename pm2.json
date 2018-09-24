@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "xiaohongxian",
+            "name": "feidai",
             "script": "./index.js",
             "exec_mode": "cluster",
             "instances": 4,
