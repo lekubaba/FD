@@ -1,34 +1,34 @@
-// (function () {  
-//     function onBridgeReady() {  
-//         WeixinJSBridge.call('hideOptionMenu');  
-//     }  
+(function () {  
+    function onBridgeReady() {  
+        WeixinJSBridge.call('hideOptionMenu');  
+    }  
   
-//     if (typeof WeixinJSBridge == "undefined") {  
-//         if (document.addEventListener) {  
-//             document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);  
-//         } else if (document.attachEvent) {  
-//             document.attachEvent('WeixinJSBridgeReady', onBridgeReady);  
-//             document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);  
-//         }  
-//     } else {  
-//         onBridgeReady();  
-//     }  
-//     var useragent = navigator.userAgent;  
-//     if (useragent.match(/MicroMessenger/i) != 'MicroMessenger') {   
-//         var opened = window.open('about:blank', '_self');  
-//     }  
-//     else{  
-//         window.alert = function(name){  
-//             var iframe = document.createElement("IFRAME");
-//             iframe.style.display="none";  
-//             iframe.setAttribute("src", 'data:text/plain,');  
-//             document.documentElement.appendChild(iframe);  
-//             window.frames[0].window.alert(name);  
-//             iframe.parentNode.removeChild(iframe);  
-//         }  
-//     }     
+    if (typeof WeixinJSBridge == "undefined") {  
+        if (document.addEventListener) {  
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);  
+        } else if (document.attachEvent) {  
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);  
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);  
+        }  
+    } else {  
+        onBridgeReady();  
+    }  
+    var useragent = navigator.userAgent;  
+    if (useragent.match(/MicroMessenger/i) != 'MicroMessenger') {   
+        var opened = window.open('about:blank', '_self');  
+    }  
+    else{  
+        window.alert = function(name){  
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display="none";  
+            iframe.setAttribute("src", 'data:text/plain,');  
+            document.documentElement.appendChild(iframe);  
+            window.frames[0].window.alert(name);  
+            iframe.parentNode.removeChild(iframe);  
+        }  
+    }     
       
-// })()
+})()
 
 $(document).ready(function(){
 
@@ -46,7 +46,7 @@ $(document).ready(function(){
 
             var creg = /^[\u2E80-\u9FFF]+$/;
             var sreg = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/;
-            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(19[0-9]{1})|(18[0-9]{1})|(14[0-9]{1})|(17[0-8]{1}))+\d{8})$/;
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(19[0-9]{1})|(18[0-9]{1})|(14[0-9]{1})|(17[0-8]{1}))+\d{8})$/;
             var username = $('.chaedu_input1').val();
             var card_id = $('.chaedu_input3').val();
             var usernumber = $('.chaedu_input2').val();
@@ -387,7 +387,10 @@ $(document).ready(function(){
                 }
                 $.post('/chaedu_dashuju',data,function(dataa,status){
                     if(dataa.code===200){
-                        window.location.href='/chaedu_return_remind';
+                        return window.location.href='/chaedu_return_remind';
+                    }
+                    if(dataa.code===900){
+                        return window.location.href='/chaedu_return_reminds';
                     }
                 });
 

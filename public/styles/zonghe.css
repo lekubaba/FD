@@ -12,7 +12,7 @@
 ::-webkit-scrollbar,::-webkit-scrollbar-track{background-color:transparent}
 ::-webkit-scrollbar-thumb{width:4px;border-radius:2px;background-color:#e4e4e4}
 
-body,html{min-height:100%;background:#e7e7e7;}
+body,html{min-height:100%;background:#2e323c;}
 a,a:visited{text-decoration:none}
 h1,h2,h3,h4,h5,h6{font-weight:500}
 
@@ -21,17 +21,15 @@ body{
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-    padding:30px;
 }
 
 
 
 .chaedu_welcome{
-    width:90vw;
+    width:100%;
     font-size: 25px;
     font-weight: bold;
-    height: 50px;
-    margin:20px 0 20px 5px;
+    height: auto;
 }
 .chaedu_title{
     width:90vw;
@@ -47,10 +45,11 @@ body{
 
 }
 .chaedu_new{
-    margin-top:30px;
-    width:90vw;
+    margin-top:20px;
+    width:93vw;
     height: 50px;
     background-color: #d32628;
+    background-image: linear-gradient(135deg,#72bf70 0%,#4f97be 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,9 +59,10 @@ body{
 
 .chaedu_old{
     margin-top:20px;
-    width:90vw;
+    width:93vw;
     height: 50px;
     background-color: #d32628;
+    background-image: linear-gradient(135deg,#72bf70 0%,#4f97be 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,7 +70,22 @@ body{
     color:#fff;
 }
 
+.old_a{
+    background-color: #999;
+}
+
+.top_t{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:100vw;
+    height: auto;
+    background-color: #efefef;
+}
+
 .chaedu_profile{
+    margin-top:20px;
     width:90vw;
     display: flex;
     flex-direction: column;
@@ -81,15 +96,44 @@ body{
     background-color: #fafafa;
 }
 
+.chaedu_profile_1{
+    width:90vw;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.chaedu_profile_2{
+    font-size: 10px;
+    width:50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#666;
+    border:1px solid #d32628;
+}
+
+.chaedu_profile_3{
+    font-size: 10px;
+    width:50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#666;
+    border:1px solid #888;
+}
+
 .chaedu_profile_a{
     width:90vw;
-    height: 28px;
+    height: 23px;
     display: flex;
     flex-direction: row;
 }
 
 .chaedu_aa{
-    font-size: 14px;
+    font-size: 12px;
     width:33.3333%;
     height: 100%;
     display: flex;
@@ -111,14 +155,14 @@ body{
 }
 
 .chaedu_aaa{
-    font-size: 14px;
+    font-size: 12px;
     width:33.3333%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     color:#333;
-    border:1px solid #555;
+    border:1px solid #888;
 }
 
 .chaedu_aaaa{
@@ -129,7 +173,7 @@ body{
     align-items: center;
     justify-content: center;
     color:#333;
-    border:1px solid #555;
+    border:1px solid #888;
 }
 
 .chaedu_bbb{
@@ -140,7 +184,7 @@ body{
     align-items: center;
     justify-content: center;
     color:#666;
-    border:1px solid #555;
+    border:1px solid #888;
     padding-left: 5px;
 }
 .chaedu_ccc{
@@ -156,5 +200,33 @@ body{
 }
 .chaedu_content{
     margin-top:20px;
+    margin-bottom: 20px;
+}
+
+.chaedu_reg{
+    margin-top:20px;
+    width:93vw;
+    height: 50px;
+    background-color: #d32628;
+    background-image: linear-gradient(135deg,#72bf70 0%,#4f97be 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color:#fff;
+}
+
+
+.chaedu_jin{
+    margin:20px 0 80px 0;
+    width:93vw;
+    height: 50px;
+    background-color: #d32628;
+    background-image: linear-gradient(135deg,#777 0%,#555 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color:#fff;
 }
 

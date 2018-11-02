@@ -26,7 +26,11 @@
             window.frames[0].window.alert(name);  
             iframe.parentNode.removeChild(iframe);  
         }  
-    }  
-    
+    }     
       
 })()
+
+
+$(document).ready(function(){
+
+})

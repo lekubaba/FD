@@ -532,14 +532,16 @@ var other_three_xi = function(other_three){
 var other_six_xi = function(other_six){
 	if(other_six===0){
 		return 3.6;
-	}
-	if(other_six===1){
+	}else if(other_six===1){
 		return 3.7;
-	}
-	if(other_six===2){
+	}else if(other_six===2){
 		return 3.7;
-	}else{
+	}else if(other_six>2&&other_six<9){
 		return 3.8;
+	}else if(other_six>=9&&other_six<14){
+		return 3.9;
+	}else{
+		return 4.0;
 	}
 
 }

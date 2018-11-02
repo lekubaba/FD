@@ -1,4 +1,4 @@
-let {User,Code,Ping,Hao,Pg} = require('../mongoose/modelSchema')
+let {User,Code,Ping,Money,Hao,Pg} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -11,44 +11,115 @@ let {Maths,Fang,Ka,Other,zonghefen_fang,jikexishu_fang} = require('../utils/Math
 //录件系统首页
 
 router.get('/chaedu_enter',function(req,res){
-	res.render('chaedu/enter')
+	res.render('chaedu/chaedu_enter')
 })
 
 
-//打开添加工号页面
+//超级代理打开添加工号页面
 
 router.get('/add_gonghao',function(req,res){
-	res.render('chaedu/add_gonghao')
+
+	if(req.signedCookies.mycookies){
+		var gonghao = req.signedCookies.mycookies.gonghao;
+		Hao.find({gonghao:gonghao},function(err,rets){
+			if(err){
+				return logger.error(err);
+			}else{
+				if(rets.length===0){
+					return;
+				}else{
+					return res.render('chaedu/add_gonghao');
+				}
+			}
+		})
+
+	}else{
+		return res.redirect('/chaedu_enter')
+	}
+
+
 })
+
+
+//杨锦旋打开添加工号页面
+
+router.get('/chaedu_gonghao',function(req,res){
+
+
+	return res.render('chaedu/add_gonghao');
+
+
+})
+
 
 
 //保存要添加的工号
 
-router.post('/gonghao',function(req,res){
-	var hao = new Hao({
-		ownername:req.body.ownername,
-		gonghao:req.body.gonghao,
-		time:formatDate('yyyy-MM-dd hh:mm:ss')
-	});
+/*isVip:tong,yin,jin*/
 
-	Hao.find({ownername:req.body.ownername,gonghao:req.body.gonghao},function(err,results){
-		if(err){
-			logger.error(err)
-		}else{
-			if(results.length>0){
-				return res.json({code:400});
+router.post('/gonghao',function(req,res){
+
+	if(!req.signedCookies.mycookies){
+		var hao = new Hao({
+			ownername:req.body.ownername,
+			ownerNumber:req.body.ownerNumber,
+			gonghao:req.body.gonghao,
+			isVip:"tong",
+			all_yeji:0,
+			all_money:0,
+			time:formatDate('yyyy-MM-dd hh:mm:ss')
+		});
+
+		Hao.find({gonghao:req.body.gonghao},function(err,results){
+			if(err){
+				logger.error(err)
+			}else{
+				if(results.length>0){
+					return res.json({code:400});
+				}
+				if(results.length===0){
+					hao.save(function(err){
+						if(err){
+							logger.error(err)
+						}else{
+							return res.json({code:200})
+						}
+					})
+				}
 			}
-			if(results.length===0){
-				hao.save(function(err){
-					if(err){
-						logger.error(err)
-					}else{
-						return res.json({code:200})
-					}
-				})
+		})		
+	}else{	
+		var hao = new Hao({
+			ownername:req.body.ownername,
+			ownerNumber:req.body.ownerNumber,
+			gonghao:req.body.gonghao,
+			z_gonghao:req.signedCookies.mycookies.gonghao,
+			isVip:"tong",
+			all_yeji:0,
+			all_money:0,
+			time:formatDate('yyyy-MM-dd hh:mm:ss')
+		});
+
+		Hao.find({gonghao:req.body.gonghao},function(err,results){
+			if(err){
+				logger.error(err)
+			}else{
+				if(results.length>0){
+					return res.json({code:400});
+				}
+				if(results.length===0){
+					hao.save(function(err){
+						if(err){
+							logger.error(err)
+						}else{
+							return res.json({code:200})
+						}
+					})
+				}
 			}
-		}
-	})
+		})
+	}
+
 
 })
 //验证工号，进入到录件系统首页
@@ -96,7 +167,6 @@ router.get('/sys_home',function(req,res){
 //接受所有录入的数据并且处理数据得出结果
 
 router.post('/chaedu_dashuju',function(req,res){
-	console.log(req.body)
 	var gonghao = req.signedCookies.mycookies.gonghao;
     var username = req.body.username;
     var card_id = req.body.card_id;
@@ -200,11 +270,12 @@ if(all_money>0){
 	var pg = new Pg({
 			username:username,
 			number:usernumber,
+			card_id:card_id,
 			zonghefen:zonghefen,
 			jikexishu:jikexishu,
 			chushiedu:chushiedu,
 			gonghao:gonghao,
-			jindu_:"待申请",
+			jindu_:"--",
 			time:formatDate('yyyy-MM-dd hh:mm:ss')
 
 	});
@@ -218,20 +289,31 @@ if(all_money>0){
 			time:formatDate('yyyy-MM-dd hh:mm:ss')	
 	})
 
-	ping.save(function(err){
+	Pg.find({$or:[{number:usernumber},{card_id:card_id}]},function(err,ret9){
 		if(err){
-			logger.error(err);
-			return res.json({code:400})
+			return logger.error(err);
 		}else{
-			pg.save(function(err){
-				if(err){
-					logger.error(err);
-					return res.json({code:400})
-				}else{
-					return res.json({code:200});
-				}		
-			})
+			if(ret9.length===0){
+				ping.save(function(err){
+					if(err){
+						logger.error(err);
+						return res.json({code:400})
+					}else{
+						pg.save(function(err){
+							if(err){
+								logger.error(err);
+								return res.json({code:400})
+							}else{
+								return res.json({code:200});
+							}		
+						})
+					}
+				})				
+			}else{
+				return res.json({code:900});
+			}
 		}
+
 	})
 
 	
@@ -259,11 +341,12 @@ if(all_money>0){
 	var pg = new Pg({
 			username:username,
 			number:usernumber,
+			card_id:card_id,
 			zonghefen:zonghefen,
 			jikexishu:jikexishu,
 			chushiedu:chushiedu,
 			gonghao:gonghao,
-			jindu_:"待申请",
+			jindu_:"--",
 			time:formatDate('yyyy-MM-dd hh:mm:ss')
 
 	});
@@ -277,20 +360,31 @@ if(all_money>0){
 			time:formatDate('yyyy-MM-dd hh:mm:ss')	
 	})
 
-	ping.save(function(err){
+	Pg.find({$or:[{number:usernumber},{card_id:card_id}]},function(err,ret9){
 		if(err){
-			logger.error(err);
-			return res.json({code:400})
+			return logger.error(err);
 		}else{
-			pg.save(function(err){
-				if(err){
-					logger.error(err);
-					return res.json({code:400})
-				}else{
-					return res.json({code:200});
-				}		
-			})
+			if(ret9.length===0){
+				ping.save(function(err){
+					if(err){
+						logger.error(err);
+						return res.json({code:400})
+					}else{
+						pg.save(function(err){
+							if(err){
+								logger.error(err);
+								return res.json({code:400})
+							}else{
+								return res.json({code:200});
+							}		
+						})
+					}
+				})				
+			}else{
+				return res.json({code:900});
+			}
 		}
+
 	})
 
 }else{
@@ -300,11 +394,12 @@ if(all_money>0){
 	var pg = new Pg({
 			username:username,
 			number:usernumber,
+			card_id:card_id,
 			zonghefen:zonghefen,
 			jikexishu:jikexishu,
 			chushiedu:chushiedu,
 			gonghao:gonghao,
-			jindu_:"待申请",
+			jindu_:"--",
 			time:formatDate('yyyy-MM-dd hh:mm:ss')
 
 	});
@@ -318,20 +413,31 @@ if(all_money>0){
 			time:formatDate('yyyy-MM-dd hh:mm:ss')	
 	})
 
-	ping.save(function(err){
+	Pg.find({$or:[{number:usernumber},{card_id:card_id}]},function(err,ret9){
 		if(err){
-			logger.error(err);
-			return res.json({code:400})
+			return logger.error(err);
 		}else{
-			pg.save(function(err){
-				if(err){
-					logger.error(err);
-					return res.json({code:400})
-				}else{
-					return res.json({code:200});
-				}		
-			})
+			if(ret9.length===0){
+				ping.save(function(err){
+					if(err){
+						logger.error(err);
+						return res.json({code:400})
+					}else{
+						pg.save(function(err){
+							if(err){
+								logger.error(err);
+								return res.json({code:400})
+							}else{
+								return res.json({code:200});
+							}		
+						})
+					}
+				})				
+			}else{
+				return res.json({code:900});
+			}
 		}
+
 	})
 
 }
@@ -361,6 +467,28 @@ router.get('/chaedu_return_remind',function(req,res){
 })
 
 
+//提交数据审核服务器返回200码后，客户端显示返回和提醒界面；
+
+router.get('/chaedu_return_reminds',function(req,res){
+	if(req.signedCookies.mycookies){
+		var gonghao = req.signedCookies.mycookies.gonghao;
+		Hao.find({gonghao:gonghao},function(err,rets){
+			if(err){
+				return logger.error(err);
+			}else{
+				if(rets.length===0){
+					return;
+				}else{
+					return res.render('chaedu/chaedu_return_reminds');
+				}
+			}
+		})
+
+	}else{
+		return res.redirect('/chaedu_enter');
+	}	
+})
+
 
 
 //-------------------------------------------------------------------
@@ -376,7 +504,37 @@ router.get('/chaedu_zonghe',function(req,res){
 				if(rets.length===0){
 					return;
 				}else{
-					return res.render('chaedu/zonghe');
+					if(rets[0].isVip==="tong"){
+						var datas={
+							url:"",
+							url_1:"",
+							b_img:"background-image: linear-gradient(135deg,#777 0%,#555 100%)",
+							b_img_2:"background-image: linear-gradient(135deg,#777 0%,#555 100%)",
+							title_1:"查额度(未激活)",
+							title_2:"添加渠道(未激活)"
+						}
+						return res.render('chaedu/chaedu_zonghe',{data:datas});
+					}else if(rets[0].isVip==="yin"){
+						var datas={
+							url:"",
+							url_1:"/add_gonghao",
+							b_img:"background-image: linear-gradient(135deg,#777 0%,#555 100%)",
+							b_img_2:"background-image: linear-gradient(135deg,#72bf70 0%,#4f97be 100%)",
+							title_1:"查额度(未激活)",
+							title_2:"添加渠道"
+						}
+						return res.render('chaedu/chaedu_zonghe',{data:datas});
+					}else{
+						var datas={
+							url:"/sys_home",
+							url_1:"/add_gonghao",
+							b_img:"background-image: linear-gradient(135deg,#72bf70 0%,#4f97be 100%)",
+							b_img_2:"background-image: linear-gradient(135deg,#72bf70 0%,#4f97be 100%)",
+							title_1:"查额度",
+							title_2:"添加渠道"
+						}
+						return res.render('chaedu/chaedu_zonghe',{data:datas});
+					}
 				}
 			}
 		})
@@ -400,7 +558,7 @@ router.get('/chaedu_profile',function(req,res){
 				return logger.error(err);
 			}else{
 
-				return res.render('chaedu/profile',{rets:rets})
+				return res.render('chaedu/chaedu_profile',{rets:rets})
 				
 			}
 		})
@@ -408,8 +566,51 @@ router.get('/chaedu_profile',function(req,res){
 	}else{
 		return res.redirect('/chaedu_enter');
 	}	
+	
+})
 
 
+
+//进入到有效战绩待领取佣金页面
+router.get('/chaedu_profile_1',function(req,res){
+	if(req.signedCookies.mycookies){
+		var gonghao = req.signedCookies.mycookies.gonghao;
+		gonghao = Number(gonghao);
+
+		Hao.findOne({gonghao:gonghao},function(err,ret3){
+			if(err){
+				return logger.error(err);
+			}else{
+				if(ret3.isVip==="tong"){
+
+					Money.find({gonghao:gonghao},{_id:0},function(err,rets){
+						if(err){
+							return logger.error(err);
+						}else{
+
+							return res.render('chaedu/chaedu_profile_1',{rets:rets})
+							
+						}
+					})
+				}else if(ret3.isVip==="jin"||ret3.isVip==="yin"){
+					Money.find({z_gonghao:gonghao},{_id:0},function(err,rets){
+						if(err){
+							return logger.error(err);
+						}else{
+
+							return res.render('chaedu/chaedu_profile_1',{rets:rets})
+							
+						}
+					})
+				}
+			}
+		})
+
+
+
+	}else{
+		return res.redirect('/chaedu_enter');
+	}
 
 	
 })
@@ -434,7 +635,7 @@ router.get('/chaedu_manager_s',function(req,res){
 		if(err){
 			logger.error(err);
 		}else{
-			return res.render('chaedu/manager',{rets:rets})
+			return res.render('chaedu/chaedu_manager',{rets:rets})
 		}
 
 
@@ -461,6 +662,208 @@ router.post('/chaedu_modify_jindu',function(req,res){
 })
 
 
+//录入有效客户
+
+router.get('/chaedu_youxiao',function(req,res){
+	res.render('chaedu/chaedu_youxiao')
+})
+
+
+router.post('/chaedu_youxiao',function(req,res){
+
+	Money.find({username:req.body.username,number:req.body.number},function(err,ret12){
+		if(err){
+			return logger.error(err);
+		}else{
+			if(ret12.length===0){
+
+				Hao.find({gonghao:{$in:[req.body.gonghao,req.body.z_gonghao]}},function(err,rets){
+					if(err){
+						logger.error(err)
+					}else{
+						if(req.body.gonghao==req.body.z_gonghao){
+
+							if(rets.length<1){
+								var data = {code:100};
+								return res.json(data);
+							}else{
+
+								Hao.findOne({gonghao:req.body.gonghao},function(err,ret5){
+									if(err){
+										return logger.error(err);
+									}else{
+										var money = new Money({
+											ownername:ret5.ownername,
+											ownerNumber:ret5.ownerNumber,
+											gonghao:req.body.gonghao,
+											z_gonghao:req.body.z_gonghao,
+											username:req.body.username,
+											number:req.body.number,
+											shenqingTime:req.body.shenqingTime,
+											shengxiaoTime:req.body.shengxiaoTime,
+											xiakuanEdu:req.body.xiakuanEdu,
+											money:req.body.money
+										});
+										money.save(function(err){
+											if(err){
+												return logger.error(err);
+											}else{
+
+												var all_yeji=parseInt(req.body.xiakuanEdu)
+												var all_money=parseInt(req.body.money)
+												Hao.update({gonghao:req.body.gonghao},{$inc:{all_yeji:all_yeji,all_money:all_money}},function(err){
+													if(err){
+														return logger.error(err);
+													}else{
+
+														Hao.update({gonghao:req.body.z_gonghao},{$inc:{all_yeji:all_yeji,all_money:all_money}},function(err){
+															if(err){
+																return logger.error(err)
+															}else{
+
+																var data ={code:200};
+																return res.json(data);		
+															}
+														})
+													}
+												})
+
+
+											}
+										})				
+									}
+
+								})
+							}
+						}else{
+							if(rets.length<2){
+								var data = {code:100};
+								return res.json(data);
+							}else{
+
+								Hao.findOne({gonghao:req.body.gonghao},function(err,ret5){
+									if(err){
+										return logger.error(err);
+									}else{
+										var money = new Money({
+											ownername:ret5.ownername,
+											ownerNumber:ret5.ownerNumber,
+											gonghao:req.body.gonghao,
+											z_gonghao:req.body.z_gonghao,
+											username:req.body.username,
+											number:req.body.number,
+											shenqingTime:req.body.shenqingTime,
+											shengxiaoTime:req.body.shengxiaoTime,
+											xiakuanEdu:req.body.xiakuanEdu,
+											money:req.body.money
+										});
+										money.save(function(err){
+											if(err){
+												return logger.error(err);
+											}else{
+												var all_yeji=parseInt(req.body.xiakuanEdu)
+												var all_money=parseInt(req.body.money)
+												Hao.update({gonghao:req.body.gonghao},{$inc:{all_yeji:all_yeji,all_money:all_money}},function(err){
+													if(err){
+														return logger.error(err);
+													}else{
+
+														Hao.update({gonghao:req.body.z_gonghao},{$inc:{all_yeji:all_yeji,all_money:all_money}},function(err){
+															if(err){
+																return logger.error(err)
+															}else{
+
+																var data ={code:200};
+																return res.json(data);		
+															}
+														})
+													}
+												})
+											}
+										})				
+									}
+
+								})
+							}
+
+						}
+					}
+				})
+			}else{
+
+				var data ={code:900};
+				return res.json(data);	
+			}
+		}
+	})
+
+})
+
+
+
+//路由到活动规则页面
+
+router.get("/chaedu_guize",function(req,res){
+
+	if(req.signedCookies.mycookies){
+		var gonghao = req.signedCookies.mycookies.gonghao;
+		Hao.find({gonghao:gonghao},function(err,rets){
+			if(err){
+				return logger.error(err);
+			}else{
+				if(rets.length===0){
+					return;
+				}else{
+					return res.render('chaedu/chaedu_guize')
+				}
+			}
+		})
+
+	}else{
+		return res.redirect('/chaedu_enter');
+	}	
+})
+
+
+
+//查看代理详细情况
+router.get('/chaedu_daili',function(req,res){
+	if(req.signedCookies.mycookies){
+		var gonghao = req.signedCookies.mycookies.gonghao;
+		Hao.find({gonghao:gonghao},function(err,rets){
+			if(err){
+				return logger.error(err);
+			}else{
+				if(rets.length===0){
+					return;
+				}else{
+
+					Hao.count({z_gonghao:gonghao},function(err,count){
+						if(err){
+							return logger.error(err)
+						}else{
+							
+							var counts = count;
+							var z_yeji = rets[0].all_yeji;
+
+							Hao.find({z_gonghao:gonghao},function(err,results){
+								if(err){
+									return logger.error(err);
+								}else{
+									return res.render('chaedu/chaedu_daili',{counts:counts,z_yeji:z_yeji,datas:results})
+								}
+							})
+
+						}
+					})
+				}
+			}
+		})
+
+	}else{
+		return res.redirect('/chaedu_enter');
+	}	
+})
 
 
 

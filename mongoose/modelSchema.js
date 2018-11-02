@@ -7,6 +7,8 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
 	number:Number,
 	authCode:Number,
+	gonghao:Number,
+	z_gonghao:Number,
 	time:String
 });
 
@@ -27,18 +29,39 @@ var pingSchema = new Schema({
 	time:String
 });
 
+//佣金数据模型
+var moneySchema = new Schema({
+	ownername:String,
+	ownerNumber:Number,
+	gonghao:Number,
+	z_gonghao:Number,
+	username:String,
+	number:String,
+	shenqingTime:String,
+	shengxiaoTime:String,
+	xiakuanEdu:Number,
+	money:Number,
+	time:String
+});
+
 //工号数据模型
 
 var haoSchema = new Schema({
 	ownername:String,
+	ownerNumber:Number,
 	gonghao:Number,
+	z_gonghao:Number,
+	isVip:String,
+	all_yeji:Number,
+	all_money:Number,
 	time:String
 });
 
-//买卖评估数据模型
+//评估系统评估数据模型
 var pgSchema = new Schema({
 	username:String,
 	number:Number,
+	card_id:String,
 	zonghefen:Number,
 	jikexishu:Number,
 	chushiedu:Number,
@@ -51,6 +74,7 @@ var pgSchema = new Schema({
 var User = mongoose.model('user',userSchema);
 var Code = mongoose.model('code',codeSchema);
 var Ping = mongoose.model('ping',pingSchema);
+var Money = mongoose.model('money',moneySchema);
 var Hao= mongoose.model('hao',haoSchema);
 var Pg = mongoose.model('pg',pgSchema);
 
@@ -59,5 +83,6 @@ var Pg = mongoose.model('pg',pgSchema);
 module.exports.User = User;
 module.exports.Code = Code;
 module.exports.Ping = Ping;
+module.exports.Money = Money;
 module.exports.Hao = Hao;
 module.exports.Pg = Pg;

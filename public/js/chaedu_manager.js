@@ -19,8 +19,5 @@ $(document).ready(function(){
 			$(this).prev().attr('placeholder','不能为空,填写‘未出额’、‘已出额’、‘借款80000’');
 		}
 
-
 	})
-
-
 })
