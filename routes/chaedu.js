@@ -866,6 +866,40 @@ router.get('/chaedu_daili',function(req,res){
 })
 
 
+// router.get('/copy',function(req,res){
+	
+// 	Code.find({},function(err,rets){
+
+// 		for(i=0;i<rets.length;i++){
+
+// 			var gonghaos= new String(rets[i].authCode);
+// 			var gonghaos1 = gonghaos.substring(3,11)
+// 			var gonghaos2 = Number(gonghaos1)
+// 			var hao = new Hao({
+// 					ownername:"飞贷君",
+// 					ownerNumber:rets[i].authCode,
+// 					gonghao:gonghaos2,
+// 					z_gonghao:74874189,
+// 					isVip:"tong",
+// 					all_yeji:0,
+// 					all_money:0,
+// 					time:formatDate('yyyy-MM-dd hh:mm:ss')		
+// 			})
+
+// 			hao.save(function(err){
+// 				if(err){
+// 					return logger.error(err);
+// 				}else{
+// 					return;
+// 				}
+// 			})	
+// 		}
+// 	})
+
+
+// })
+
+
 
 
 

@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	number:Number,
+	number_s:String,
 	authCode:Number,
 	gonghao:Number,
 	z_gonghao:Number,

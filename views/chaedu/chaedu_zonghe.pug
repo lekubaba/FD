@@ -13,6 +13,7 @@ html(lang="en")
 		meta(name="mobile-web-app-capable" content="yes")
 		meta(name="apple-mobile-web-app-status-bar-style" content="white")
 		link(rel="stylesheet" href="/styles/zonghe.css")
+		script(src="/js/remind.js")
 	body
 		img.chaedu_welcome(src="/images/fd_chae.png")
 		//- a.chaedu_new(href="/sys_home") 录新件
@@ -25,7 +26,7 @@ html(lang="en")
 		a.chaedu_old(href="/chaedu_profile") 已录件
 		a.chaedu_old(href="/chaedu_profile_1") 下款情况
 		a.chaedu_old(style=data.b_img_2 href=data.url_1)=data.title_2
-		a.chaedu_reg(href="/chaedu_daili") 我的渠道
+		a.chaedu_reg(style="margin-bottom:80px;" href="/chaedu_daili") 我的渠道
 		// a.chaedu_reg(href="/chaedu_guize") 活动规则
 		// a.chaedu_jin(class="old_a") 领奖金(未激活)
 	script(src="/js/jquery.min.js")
