@@ -24,7 +24,7 @@ $(document).ready(function(){
 	//推广
 
 	var path = document.getElementById("tg_url").getAttribute("data-tg");
-	var tg_url = 'feidai.com.ssdsedssddsfuldsdehonkodklsjefuli76576jdjd87yuh.xiaohongxian.com'+path;
+	var tg_url = 'http://feidai.com.ssdsedssddsfuldsdehonkodklsjefuli76576jdjd87yuh.xiaohongxian.com'+path;
 
 	var qrcode = new QRCode("qrcode_t", {
 	    text: tg_url,
