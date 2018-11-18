@@ -2,7 +2,7 @@ doctype html
 html(lang="en")
 	head
 		meta(charset="UTF-8")
-		title 录件系统
+		title 查额系统
 		link(rel="shortcut icon" href="/images/logo.png")
 		link(rel="bookmark" href="/images/logo.png")
 		link(rel="icon" href="/images/logo.png" type="image/png")
@@ -23,11 +23,23 @@ html(lang="en")
 		//- a.chaedu_reg(href="#") 代理人规则
 		//- a.chaedu_jin(class="old_a") 领奖金(未激活)
 		a.chaedu_new(style=data.b_img href=data.url)=data.title_1
-		a.chaedu_old(href="/chaedu_profile") 已录件
-		a.chaedu_old(href="/chaedu_profile_1") 下款情况
+		a.chaedu_old(style="display:"+data.displ href="/chaedu_profile") 查过的客户
+		a.chaedu_old(href="/chaedu_profile_1") 有效战绩
+		a.chaedu_reg_1(id="zs_url" style="display:"+data.disp data-url="/chaedu_activity_zs/"+data.number) 独立招商二维码
+		a.chaedu_reg_1(style="display:"+data.disp href="/chaedu_guize_zs") 招商奖励
+		a.chaedu_reg_1(id="tg_url" data-tg="/newEnter/"+data.number) 独立推广二维码
 		a.chaedu_old(style=data.b_img_2 href=data.url_1)=data.title_2
-		a.chaedu_reg(style="margin-bottom:80px;" href="/chaedu_daili") 我的渠道
-		// a.chaedu_reg(href="/chaedu_guize") 活动规则
-		// a.chaedu_jin(class="old_a") 领奖金(未激活)
+		a.chaedu_reg(href="/chaedu_daili") 代理详情
+		a.chaedu_reg(href="/chaedu_guize") 活动规则
+		a.chaedu_jin(class="old_a") 领奖金(未激活)
+		div.qrcode_zs(style="display:none;")
+			div.qrcode_zs_b
+				div(id="qrcode")
+			img.clear_a(style="margin-top:10px;" src="/images/clear.png")
+		div.qrcode_sq(style="display:none;")
+			div.qrcode_tg_b
+				div(id="qrcode_t")
+			img.clear_t(style="margin-top:10px;" src="/images/clear.png")
 	script(src="/js/jquery.min.js")
+	script(src="/js/qrcodejs/qrcode.min.js")
 	script(src="/js/chaedu_zonghe.js")

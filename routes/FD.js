@@ -32,6 +32,7 @@ router.post('/save_number',function(req,res){
 			if(results.length>0){
 				var number = req.body.number;
 				var number_s = number.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+
 				var user = new User({
 					number:req.body.number,
 					number_s:number_s,
@@ -167,28 +168,30 @@ router.post('/add_pinggu',function(req,res){
 })
 
 
-router.get('/number_s',function(req,res){
-	User.find({},function(err,rets){
-		if(err){
-			return logger.error(err)
-		}else{
-			for(i=0;i<rets.length;i++){
-				var number_s = rets[i].number;
-				number_s = String(number_s).replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-				User.update({number:rets[i].number},{$set:{number_s:number_s}},{multi:true},function(err){
-					if(err){
-						return logger.error(err)
-					}else{
+
+
+// router.get('/number_s',function(req,res){
+// 	User.find({},function(err,rets){
+// 		if(err){
+// 			return logger.error(err)
+// 		}else{
+// 			for(i=0;i<rets.length;i++){
+// 				var number_s = rets[i].number;
+// 				number_s = String(number_s).replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+// 				User.update({number:rets[i].number},{$set:{number_s:number_s}},{multi:true},function(err){
+// 					if(err){
+// 						return logger.error(err)
+// 					}else{
 						
-					}
-				})
-			}
-			return res.send("hello");
+// 					}
+// 				})
+// 			}
+// 			return res.send("hello");
 
 
-		}
-	})
-})
+// 		}
+// 	})
+// })
 
 
 

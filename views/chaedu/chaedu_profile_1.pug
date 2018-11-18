@@ -24,11 +24,11 @@ html(lang="en")
 				div.chaedu_profile_a
 					div.chaedu_aa 客户姓名
 					div.chaedu_aa 申请时间
-					div.chaedu_aa --
+					div.chaedu_aa 生效时间
 				div.chaedu_profile_a
 					div.chaedu_aa 手机号
 					div.chaedu_aa 下款额度
-					div.chaedu_aa --
+					div.chaedu_aa 预计佣金
 			div.chaedu_content
 				each item in rets
 					div.chaedu_profile(style="margin-top:5px;")
@@ -38,8 +38,8 @@ html(lang="en")
 						div.chaedu_profile_a
 							div.chaedu_aaa=item.username
 							div.chaedu_aaa=item.shenqingTime
-							div.chaedu_aaa --
+							div.chaedu_aaa=item.shengxiaoTime
 						div.chaedu_profile_a
 							div.chaedu_aaa=item.number
 							div.chaedu_aaa=item.xiakuanEdu
-							div.chaedu_aaa(style="color:red;") --
+							div.chaedu_aaa(style="color:red;")=item.money
