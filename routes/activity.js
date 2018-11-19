@@ -117,7 +117,7 @@ router.post("/activity_gonghao_add",function(req,res){
 										return res.json({code:310});
 									}else{
 
-										if(rety[0].gonghao===11111111){
+										if(rety[0].gonghao===1111111122){
 											var hao = new Hao({
 												ownername:req.body.ownername,
 												ownerNumber:req.body.ownerNumber,
